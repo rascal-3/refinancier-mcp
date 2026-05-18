@@ -67,6 +67,10 @@ export class RefinancierClient {
         "technology_score",
         "patents_count",
         "customer_concentration",
+        // 2026-05: upstream signals for context-aware recommendation
+        "anomaly_findings",
+        "risk_warnings",
+        "risk_factors",
       ];
       for (const k of passThrough) {
         if (k in args && args[k] !== undefined && args[k] !== null) body[k] = args[k];
@@ -148,7 +152,7 @@ export class RefinancierClient {
 
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      "User-Agent": "refinancier-mcp/0.0.6",
+      "User-Agent": "refinancier-mcp/0.0.7",
     };
     if (this.apiKey) {
       headers["Authorization"] = `Bearer ${this.apiKey}`;

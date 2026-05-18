@@ -55,6 +55,21 @@ export const TOOLS: ToolDefinition[] = [
         technology_score: { type: "number", minimum: 0, maximum: 1 },
         patents_count: { type: "integer", minimum: 0 },
         max_strategies: { type: "integer", default: 5, minimum: 1, maximum: 10 },
+        anomaly_findings: {
+          type: "array",
+          items: { type: "string" },
+          description: "Signals from get_anomaly_timeline (event titles / findings). Pass them through to make recommendations context-aware.",
+        },
+        risk_warnings: {
+          type: "array",
+          items: { type: "string" },
+          description: "Risk warnings (Z-Score / M-Score / governance issues). Pass them through to make recommendations context-aware.",
+        },
+        risk_factors: {
+          type: "array",
+          items: { type: "string" },
+          description: "Risk factors from run_scenario (downside drivers). Pass them through to make recommendations context-aware.",
+        },
       },
       required: ["company_name", "industry", "annual_revenue", "annual_profit"],
     },
