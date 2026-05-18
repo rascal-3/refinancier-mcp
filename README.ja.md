@@ -16,7 +16,9 @@
 このパッケージは [refinancier-banks](https://refinancier-banks.com) の **クライアント側 MCP ラッパー** です。
 refinancier の意思決定インテリジェンス API (企業価値評価、異常検知、バリューアップ示唆、因果推論、XAI 監査証跡) を [Model Context Protocol](https://modelcontextprotocol.io/) 経由で AI エージェントに公開します。
 
-**現在の状態:** スケルトン。セルフサーブ利用は 2026 Q3 GA 予定。
+**現在の状態:** スケルトン (Decision Intelligence 3 ツール)。セルフサーブ利用は 2026 Q3 GA 予定。
+
+**⚠️ 重要**: 一部の API エンドポイント (`anomaly-timeline/quick-get`、`causal/quick-scenario`) は本番 `refinancier-banks.com` に **まだデプロイされていません**。動作確認はローカル開発環境 (`REFINANCIER_BASE_URL=http://localhost:3000` + ローカル SvelteKit/FastAPI 起動) で行ってください。本格的な機能セット (30+ ツール) を試したい場合は [refinancier-banks](https://github.com/rascal-3/refinancier-banks) の Python MCP を直接利用するのが現状の推奨です。
 
 早期アクセスは [refinancier-banks.com](https://refinancier-banks.com) または info@refinancier.jp までお問い合わせください。
 

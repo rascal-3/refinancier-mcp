@@ -3,9 +3,9 @@
  *
  * 🚧 Under Development - server-side public API is in private beta as of 2026-05.
  *
- * This client is the thin wrapper that translates MCP tool calls into HTTPS
- * requests against refinancier-banks.com. All authentication, business logic,
- * and audit trail recording happens server-side.
+ * Implements per-tool request-body mapping so that the MCP-facing schema (friendly
+ * names like `annual_revenue`) can stay stable while the upstream FastAPI schema
+ * evolves (e.g. `revenue` / `operating_profit` / `net_income`).
  */
 
 import { TOOLS, ToolDefinition } from "./tools.js";
@@ -32,13 +32,88 @@ export class RefinancierClient {
     return tool;
   }
 
+  /**
+   * Map the MCP-facing arguments to the upstream FastAPI request body.
+   *
+   * Tools expose user-friendly parameter names (annual_revenue, annual_profit, etc.)
+   * but the FastAPI side uses different field names per endpoint. This isolation
+   * layer keeps the MCP schema stable as the backend evolves.
+   */
+  private mapRequestBody(
+    name: string,
+    args: Record<string, unknown>
+  ): Record<string, unknown> {
+    if (name === "get_recommended_actions") {
+      // FastAPI QuickAnalysisRequest expects: revenue, operating_profit, net_income, ...
+      const annualProfit = args.annual_profit as number | undefined;
+      const body: Record<string, unknown> = {
+        company_name: args.company_name,
+        industry: args.industry,
+        revenue: args.annual_revenue,
+        operating_profit: args.operating_profit ?? annualProfit,
+        net_income: annualProfit,
+      };
+      // Optional pass-through fields with same name on both sides
+      const passThrough = [
+        "total_assets",
+        "equity",
+        "employees",
+        "growth_rate",
+        "intangible_mode",
+        "stock_code",
+        "esg_score",
+        "human_capital_score",
+        "brand_score",
+        "technology_score",
+        "patents_count",
+        "customer_concentration",
+      ];
+      for (const k of passThrough) {
+        if (k in args && args[k] !== undefined && args[k] !== null) body[k] = args[k];
+      }
+      // Renames
+      if ("assets" in args && args.assets !== undefined && args.assets !== null) {
+        body.total_assets = args.assets;
+      }
+      return body;
+    }
+
+    if (name === "get_anomaly_timeline") {
+      // Matches FastAPI AnomalyTimelineQuickRequest 1:1
+      return {
+        company_name: args.company_name,
+        industry: args.industry,
+        annual_revenue: args.annual_revenue,
+        annual_profit: args.annual_profit,
+        years: args.years ?? 3,
+        additional_context: args.additional_context,
+      };
+    }
+
+    if (name === "run_scenario") {
+      // Matches FastAPI QuickScenarioRequest 1:1
+      return {
+        company_name: args.company_name,
+        industry: args.industry,
+        annual_revenue: args.annual_revenue,
+        annual_profit: args.annual_profit,
+        scenario: args.scenario,
+        additional_context: args.additional_context,
+      };
+    }
+
+    // Default: pass through unchanged
+    return args;
+  }
+
   async callTool(name: string, args: Record<string, unknown>): Promise<unknown> {
     const tool = this.findTool(name);
     const url = `${this.baseUrl}${tool.endpoint}`;
+    const body = this.mapRequestBody(name, args);
 
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      "User-Agent": "refinancier-mcp/0.0.1",
+      "User-Agent": "refinancier-mcp/0.0.5",
     };
     if (this.apiKey) {
       headers["Authorization"] = `Bearer ${this.apiKey}`;
@@ -47,13 +122,13 @@ export class RefinancierClient {
     const response = await fetch(url, {
       method: "POST",
       headers,
-      body: JSON.stringify(args),
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `HTTP ${response.status} from ${url}: ${errorText.slice(0, 500)}`
+        `HTTP ${response.status} from ${tool.endpoint}: ${errorText.slice(0, 500)}`
       );
     }
 
