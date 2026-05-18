@@ -1,6 +1,6 @@
 {
   "name": "refinancier-mcp",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "MCP client for refinancier — Trust Infrastructure for Uncertain Assets. Enterprise valuation, anomaly detection, and value-up recommendations for AI agents.",
   "type": "module",
   "main": "dist/index.js",
@@ -10,6 +10,7 @@
   "files": [
     "dist",
     "README.md",
+    "README.ja.md",
     "LICENSE",
     "claude_desktop_config.example.json"
   ],

@@ -7,6 +7,8 @@
 [![MCP](https://img.shields.io/badge/MCP-1.x-blue)](https://modelcontextprotocol.io/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
+English | [日本語 README](README.ja.md)
+
 ---
 
 ## 🚧 Under Development
@@ -57,7 +59,15 @@ Add to your MCP configuration (`~/Library/Application Support/Claude/claude_desk
 }
 ```
 
-The `-y` flag auto-installs devDependencies (including `tsx`) needed at runtime.
+**Note for nvm users**: if your PATH prioritizes an older Node.js (< v14) over a newer one, specify the absolute path:
+
+```json
+"command": "/Users/YOUR_NAME/.nvm/versions/node/v22.x.x/bin/npx",
+"env": {
+  "PATH": "/Users/YOUR_NAME/.nvm/versions/node/v22.x.x/bin:/usr/local/bin:/usr/bin:/bin",
+  "REFINANCIER_API_KEY": "rfn_live_..."
+}
+```
 
 ### From Source
 
