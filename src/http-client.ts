@@ -102,6 +102,41 @@ export class RefinancierClient {
       };
     }
 
+    if (name === "valuate_company") {
+      // Matches FastAPI QuickEvaluateRequest 1:1
+      return {
+        company_name: args.company_name,
+        industry: args.industry,
+        annual_revenue: args.annual_revenue,
+        annual_profit: args.annual_profit,
+        total_assets: args.total_assets,
+        equity: args.equity,
+        employees: args.employees,
+        additional_context: args.additional_context,
+      };
+    }
+
+    if (name === "build_causal_dag") {
+      // Matches FastAPI QuickDAGRequest 1:1
+      return {
+        company_name: args.company_name,
+        industry: args.industry,
+        annual_revenue: args.annual_revenue,
+        annual_profit: args.annual_profit,
+        employees: args.employees,
+        focus_outcome: args.focus_outcome ?? "enterprise_value",
+        additional_context: args.additional_context,
+      };
+    }
+
+    if (name === "check_compliance") {
+      // Matches FastAPI QuickComplianceCheckRequest 1:1
+      return {
+        text: args.text,
+        context: args.context,
+      };
+    }
+
     // Default: pass through unchanged
     return args;
   }
@@ -113,7 +148,7 @@ export class RefinancierClient {
 
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      "User-Agent": "refinancier-mcp/0.0.5",
+      "User-Agent": "refinancier-mcp/0.0.6",
     };
     if (this.apiKey) {
       headers["Authorization"] = `Bearer ${this.apiKey}`;

@@ -18,9 +18,9 @@ It exposes refinancier's decision-intelligence APIs (enterprise valuation, anoma
 value-up recommendations, causal inference, XAI audit trails) to AI agents via the
 [Model Context Protocol](https://modelcontextprotocol.io/).
 
-**Current status:** Skeleton with 3 Decision Intelligence tools. Coming Q3 2026 for self-serve usage.
+**Current status:** 6 tools live (Decision Intelligence + Compliance + Valuation + Causal DAG). Coming Q3 2026 for self-serve usage.
 
-**⚠️ Important**: some API endpoints (`anomaly-timeline/quick-get`, `causal/quick-scenario`) are **not yet deployed to production `refinancier-banks.com`**. For local testing, point `REFINANCIER_BASE_URL=http://localhost:3000` at a local SvelteKit/FastAPI stack. For the full toolset (30+ tools), use the Python MCP shipped inside [refinancier-banks](https://github.com/rascal-3/refinancier-banks) directly.
+**⚠️ Important**: some Quick endpoints are unauthenticated demo-only. For the full toolset (30+ tools, with auth), use the Python MCP shipped inside [refinancier-banks](https://github.com/rascal-3/refinancier-banks) directly.
 
 For early access, see [refinancier-banks.com](https://refinancier-banks.com) or contact info@refinancier.jp.
 
