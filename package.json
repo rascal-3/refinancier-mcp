@@ -1,0 +1,46 @@
+{
+  "name": "refinancier-mcp",
+  "version": "0.0.1",
+  "description": "MCP client for refinancier — Trust Infrastructure for Uncertain Assets. Enterprise valuation, anomaly detection, and value-up recommendations for AI agents.",
+  "type": "module",
+  "main": "src/index.ts",
+  "bin": {
+    "refinancier-mcp": "src/index.ts"
+  },
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "build": "tsc",
+    "dev": "tsx --watch src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "@types/node": "^22.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "refinancier",
+    "enterprise-valuation",
+    "causal-ai",
+    "xai",
+    "decision-intelligence",
+    "ai-agent",
+    "anomaly-detection",
+    "value-up"
+  ],
+  "author": "refinancier, inc.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rascal-3/refinancier-mcp.git"
+  },
+  "homepage": "https://refinancier-banks.com",
+  "bugs": {
+    "url": "https://github.com/rascal-3/refinancier-mcp/issues"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "refinancier": {
+      "command": "npx",
+      "args": ["refinancier-mcp"],
+      "env": {
+        "REFINANCIER_API_KEY": "rfn_live_YOUR_KEY_HERE",
+        "REFINANCIER_BASE_URL": "https://refinancier-banks.com"
+      }
+    }
+  }
+}
