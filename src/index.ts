@@ -28,7 +28,7 @@ const client = new RefinancierClient({ baseUrl: BASE_URL, apiKey: API_KEY });
 const server = new Server(
   {
     name: "refinancier-mcp",
-    version: "0.0.1",
+    version: "0.0.3",
   },
   {
     capabilities: {
@@ -84,7 +84,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("refinancier-mcp v0.0.1 (skeleton) running on stdio");
+  console.error("refinancier-mcp v0.0.3 (skeleton) running on stdio");
 }
 
 main().catch((err) => {

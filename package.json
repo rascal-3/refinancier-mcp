@@ -1,16 +1,23 @@
 {
   "name": "refinancier-mcp",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "MCP client for refinancier — Trust Infrastructure for Uncertain Assets. Enterprise valuation, anomaly detection, and value-up recommendations for AI agents.",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "bin": {
-    "refinancier-mcp": "src/index.ts"
+    "refinancier-mcp": "dist/index.js"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "claude_desktop_config.example.json"
+  ],
   "scripts": {
-    "start": "tsx src/index.ts",
-    "build": "tsc",
-    "dev": "tsx --watch src/index.ts"
+    "start": "node dist/index.js",
+    "dev": "tsx --watch src/index.ts",
+    "build": "tsc && chmod +x dist/index.js",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
@@ -20,6 +27,9 @@
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
     "@types/node": "^22.0.0"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "keywords": [
     "mcp",
