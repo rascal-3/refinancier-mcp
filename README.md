@@ -37,28 +37,41 @@ of operating companies — anywhere uncertainty must be translated into auditabl
 
 ---
 
-## Quick Start (planned)
+## Quick Start
 
-```bash
-npm install -g refinancier-mcp
-```
+### Claude Desktop / Claude Code
 
-Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+Add to your MCP configuration (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
 ```json
 {
   "mcpServers": {
     "refinancier": {
-      "command": "refinancier-mcp",
+      "command": "npx",
+      "args": ["-y", "refinancier-mcp"],
       "env": {
-        "REFINANCIER_API_KEY": "rfn_live_..."
+        "REFINANCIER_API_KEY": "rfn_live_your_api_key"
       }
     }
   }
 }
 ```
 
-API keys: issue via your refinancier admin console (private beta).
+The `-y` flag auto-installs devDependencies (including `tsx`) needed at runtime.
+
+### From Source
+
+```bash
+git clone https://github.com/rascal-3/refinancier-mcp.git
+cd refinancier-mcp
+npm install
+npm start
+```
+
+### API Keys
+
+API keys (`rfn_live_*`) are issued via the refinancier admin console (currently private beta).
+Contact info@refinancier.jp for early access.
 
 ---
 
